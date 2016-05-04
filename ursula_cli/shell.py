@@ -30,7 +30,8 @@ import ansible
 
 
 LOG = logging.getLogger(__name__)
-ANSIBLE_VERSION = '2.0'
+ANSIBLE_VERSION_MIN = LooseVersion('2.0.2.0')
+ANSIBLE_VERSION_MAX = LooseVersion('3.0')
 
 
 def _initialize_logger(level=logging.DEBUG, logfile=None):
@@ -44,12 +45,14 @@ def _initialize_logger(level=logging.DEBUG, logfile=None):
 
 
 def _check_ansible_version():
-    version = ansible.__version__
-    if not LooseVersion(version) >= LooseVersion(ANSIBLE_VERSION):
-        raise Exception("You are using ansible-playbook '%s'. "
-                        "Current required version is: '%s'. You may install "
-                        "the correct version with 'pip install -U -r "
-                        "requirements.txt'" % (version, ANSIBLE_VERSION))
+    current_version = LooseVersion(ansible.__version__)
+    if not (ANSIBLE_VERSION_MIN >= current_version < ANSIBLE_VERSION_MAX):
+        raise Exception(
+            'You are using ansible-playbook "%s". The current required '
+            'version is between "%s" and "%s". You may install the correct '
+            'version with "pip install -U -r requirements.txt"'
+            % (current_version, ANSIBLE_VERSION_MIN, ANSIBLE_VERSION_MAX)
+        )
 
 
 def _append_envvar(key, value):
