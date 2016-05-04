@@ -15,18 +15,19 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 
-import ansible
-import argparse
-import logging
 import os
-import shutil
-import socket
-import subprocess
 import sys
 import time
-import yaml
-
+import shutil
+import socket
+import logging
+import argparse
+import subprocess
 from distutils.version import LooseVersion
+
+import yaml
+import ansible
+
 
 LOG = logging.getLogger(__name__)
 ANSIBLE_VERSION = '2.0'
