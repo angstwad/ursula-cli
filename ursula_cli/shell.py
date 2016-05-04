@@ -26,7 +26,7 @@ import time
 import yaml
 
 LOG = logging.getLogger(__name__)
-ANSIBLE_VERSION = '1.9.2-bbg'
+ANSIBLE_VERSION = '2.0.2.0'
 
 
 def _initialize_logger(level=logging.DEBUG, logfile=None):
@@ -104,7 +104,7 @@ def _run_ansible(inventory, playbook, user='root', module_path='./library',
     ]
 
     if sudo:
-        command.append("--sudo")
+        command.append("--become --become-method sudo")
     command += extra_args
 
     LOG.debug("Running command: %s with environment: %s",
